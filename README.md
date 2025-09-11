@@ -14,7 +14,7 @@
 
 -mostly python and javascript is used in backend with mysql query for database managements
 
--the flask is used for main application routing
+-the flask is used for main application routing and html,css for frontend
 
 -students can register for events and check event details and give feedback
 
