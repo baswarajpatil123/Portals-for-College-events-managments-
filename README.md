@@ -1,6 +1,6 @@
 # Portals-for-College-events-managments-
 
-#the setup 
+#the setup-
 #firstly install mysql 
 then install all things from requirements.txt 
 run the server in one shell
