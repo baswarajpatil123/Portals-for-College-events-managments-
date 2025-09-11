@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal - Campus Event Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header admin-header">
+        <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h1>🎓 Admin Portal</h1>
+                    <p>Campus Event Management System</p>
+                </div>
+                <div class="header-actions">
+                    <span class="user-info">👤 College Staff</span>
+                    <a href="/student-app" class="btn btn-outline btn-sm">Switch to Student App</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav admin-nav">
+        <div class="container">
+            <div class="nav-container">
+                <a href="#" class="nav-btn active" data-section="admin-dashboard">📊 Dashboard</a>
+                <a href="#" class="nav-btn" data-section="manage-events">🎯 Manage Events</a>
+                <a href="#" class="nav-btn" data-section="create-event">➕ Create Event</a>
+                <a href="#" class="nav-btn" data-section="student-management">👥 Students</a>
+                <a href="#" class="nav-btn" data-section="analytics">📈 Analytics</a>
+                <a href="#" class="nav-btn" data-section="reports">📋 Reports</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Admin Dashboard Section -->
+            <section id="admin-dashboard" class="section active">
+                <div class="admin-stats-grid">
+                    <div class="admin-stat-card primary">
+                        <div class="stat-icon">🎯</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="total-events">-</div>
+                            <div class="stat-label">Total Events</div>
+                        </div>
+                    </div>
+                    <div class="admin-stat-card success">
+                        <div class="stat-icon">📝</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="total-registrations">-</div>
+                            <div class="stat-label">Total Registrations</div>
+                        </div>
+                    </div>
+                    <div class="admin-stat-card warning">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="total-attendance">-</div>
+                            <div class="stat-label">Total Attendance</div>
+                        </div>
+                    </div>
+                    <div class="admin-stat-card info">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="avg-rating">-</div>
+                            <div class="stat-label">Average Rating</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Recent Events</h3>
+                            <a href="#" class="btn btn-primary btn-sm" onclick="adminApp.showSection('create-event')">Create New</a>
+                        </div>
+                        <div id="recent-events-list">
+                            <div class="loading">
+                                <div class="spinner"></div>
+                                Loading events...
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Quick Actions</h3>
+                        </div>
+                        <div class="admin-actions">
+                            <button class="action-btn create" onclick="adminApp.showSection('create-event')">
+                                <div class="action-icon">➕</div>
+                                <div class="action-text">Create Event</div>
+                            </button>
+                            <button class="action-btn manage" onclick="adminApp.showSection('manage-events')">
+                                <div class="action-icon">🎯</div>
+                                <div class="action-text">Manage Events</div>
+                            </button>
+                            <button class="action-btn analytics" onclick="adminApp.showSection('analytics')">
+                                <div class="action-icon">📈</div>
+                                <div class="action-text">View Analytics</div>
+                            </button>
+                            <button class="action-btn reports" onclick="adminApp.showSection('reports')">
+                                <div class="action-icon">📋</div>
+                                <div class="action-text">Generate Reports</div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Manage Events Section -->
+            <section id="manage-events" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Event Management</h3>
+                        <div class="header-controls">
+                            <select id="event-status-filter" class="form-select">
+                                <!-- Options will be dynamically populated based on selected tab -->
+                            </select>
+                        </div>
+                    </div>
+                    <div id="admin-events-content">
+                        <!-- Event subsections will be dynamically generated here -->
+                    </div>
+                    <div id="admin-events-list">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                            Loading events...
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Create Event Section -->
+            <section id="create-event" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Create New Event</h3>
+                        <p class="card-subtitle">Fill in the details below to create a new event for your college</p>
+                    </div>
+                    <form id="admin-create-event-form" class="admin-form">
+                        <div class="form-section">
+                            <h4 class="form-section-title">Basic Information</h4>
+                            <div class="grid grid-2">
+                                <div class="form-group">
+                                    <label class="form-label" for="admin-event-title">Event Title *</label>
+                                    <input type="text" class="form-input" id="admin-event-title" name="title" required 
+                                           placeholder="e.g., AI/ML Workshop 2025">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="admin-event-type">Event Type *</label>
+                                    <select class="form-select" id="admin-event-type" name="event_type" required>
+                                        <option value="">Select Type</option>
+                                        <option value="workshop">🔧 Workshop</option>
+                                        <option value="hackathon">💻 Hackathon</option>
+                                        <option value="tech_talk">🎤 Tech Talk</option>
+                                        <option value="fest">🎉 Fest</option>
+                                        <option value="seminar">📚 Seminar</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h4 class="form-section-title">Event Details</h4>
+                            <div class="form-group">
+                                <label class="form-label" for="admin-event-description">Description</label>
+                                <textarea class="form-textarea" id="admin-event-description" name="description" rows="4" 
+                                          placeholder="Describe what attendees will learn or experience..."></textarea>
+                            </div>
+                            <div class="grid grid-2">
+                                <div class="form-group">
+                                    <label class="form-label" for="admin-event-location">Location *</label>
+                                    <input type="text" class="form-input" id="admin-event-location" name="location" required 
+                                           placeholder="e.g., Main Auditorium, Lab 101">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="admin-event-capacity">Max Capacity</label>
+                                    <input type="number" class="form-input" id="admin-event-capacity" name="max_capacity" min="0" 
+                                           placeholder="50">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h4 class="form-section-title">Schedule & Organization</h4>
+                            <div class="grid grid-2">
+                                <div class="form-group">
+                                    <label class="form-label" for="admin-event-start">Start Date & Time *</label>
+                                    <input type="datetime-local" class="form-input" id="admin-event-start" name="start_datetime" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="admin-event-end">End Date & Time *</label>
+                                    <input type="datetime-local" class="form-input" id="admin-event-end" name="end_datetime" required>
+                                </div>
+                            </div>
+                            <div class="grid grid-2">
+                                <div class="form-group">
+                                    <label class="form-label" for="admin-event-college">College *</label>
+                                    <select class="form-select" id="admin-event-college" name="college_id" required>
+                                        <option value="">Select College</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="admin-event-created-by">Organizer Email *</label>
+                                    <input type="email" class="form-input" id="admin-event-created-by" name="created_by" required 
+                                           placeholder="your.email@college.edu">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <span>➕ Create Event</span>
+                            </button>
+                            <button type="reset" class="btn btn-outline">
+                                <span>🔄 Reset Form</span>
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="adminApp.showSection('admin-dashboard')">
+                                <span>❌ Cancel</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Student Management Section -->
+            <section id="student-management" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Student Management</h3>
+                        <div class="header-controls">
+                            <select id="admin-student-college-filter" class="form-select">
+                                <option value="">All Colleges</option>
+                            </select>
+                            <input type="text" id="student-search" class="form-input" placeholder="Search students...">
+                        </div>
+                    </div>
+                    <div id="admin-students-content">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                            Loading students...
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analytics Section -->
+            <section id="analytics" class="section">
+                <div id="admin-analytics-content">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        Loading analytics...
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reports Section -->
+            <section id="reports" class="section">
+                <div id="admin-reports-content">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        Loading reports...
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="admin-footer">
+        <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <p>&copy; 2025 Campus Event Management Platform - Admin Portal</p>
+                <div>
+                    <span>🎯 Event Management</span>
+                    <span style="margin: 0 1rem;">|</span>
+                    <span>📊 Analytics Dashboard</span>
+                    <span style="margin: 0 1rem;">|</span>
+                    <span>🔧 Administrative Tools</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+</body>
+</html>
+
+

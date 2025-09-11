@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Event Management Platform</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>🎓 Campus Event Management Platform</h1>
+            <p>Streamline your college events with ease</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-container">
+                <a href="#" class="nav-btn active" data-section="dashboard">📊 Dashboard</a>
+                <a href="#" class="nav-btn" data-section="events">🎯 Events</a>
+                <a href="#" class="nav-btn" data-section="students">👥 Students</a>
+                <a href="#" class="nav-btn" data-section="create-event">➕ Create Event</a>
+                <a href="#" class="nav-btn" data-section="reports">📈 Reports</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section active">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Dashboard Overview</h2>
+                    </div>
+                    <div id="dashboard-content">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                            Loading dashboard...
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Events Section -->
+            <section id="events" class="section">
+                <div id="events-content">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        Loading events...
+                    </div>
+                </div>
+            </section>
+
+            <!-- Students Section -->
+            <section id="students" class="section">
+                <div id="students-content">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        Loading students...
+                    </div>
+                </div>
+            </section>
+
+            <!-- Create Event Section -->
+            <section id="create-event" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Create New Event</h2>
+                    </div>
+                    <form id="create-event-form">
+                        <div class="grid grid-2">
+                            <div class="form-group">
+                                <label class="form-label" for="event-title">Event Title</label>
+                                <input type="text" class="form-input" id="event-title" name="title" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="event-type">Event Type</label>
+                                <select class="form-select" id="event-type" name="event_type" required>
+                                    <option value="">Select Type</option>
+                                    <option value="workshop">Workshop</option>
+                                    <option value="hackathon">Hackathon</option>
+                                    <option value="tech_talk">Tech Talk</option>
+                                    <option value="fest">Fest</option>
+                                    <option value="seminar">Seminar</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="event-college">College</label>
+                                <select class="form-select" id="event-college" name="college_id" required>
+                                    <option value="">Select College</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="event-created-by">Created By (Email)</label>
+                                <input type="email" class="form-input" id="event-created-by" name="created_by" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="event-start">Start Date & Time</label>
+                                <input type="datetime-local" class="form-input" id="event-start" name="start_datetime" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="event-end">End Date & Time</label>
+                                <input type="datetime-local" class="form-input" id="event-end" name="end_datetime" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="event-location">Location</label>
+                                <input type="text" class="form-input" id="event-location" name="location" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="event-capacity">Max Capacity</label>
+                                <input type="number" class="form-input" id="event-capacity" name="max_capacity" min="0">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="event-description">Description</label>
+                            <textarea class="form-textarea" id="event-description" name="description" rows="4"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Create Event</button>
+                            <button type="reset" class="btn btn-outline">Reset Form</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Reports Section -->
+            <section id="reports" class="section">
+                <div id="reports-content">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        Loading reports...
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer style="background: var(--dark-color); color: white; padding: 2rem 0; margin-top: 3rem; text-align: center;">
+        <div class="container">
+            <p>&copy; 2025 Campus Event Management Platform. Built with ❤️ for educational institutions.</p>
+            <div style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
+                <span>🚀 Powered by Flask & MySQL</span>
+                <span style="margin: 0 1rem;">|</span>
+                <span>📊 Real-time Analytics</span>
+                <span style="margin: 0 1rem;">|</span>
+                <span>🎯 Event Management Made Easy</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
+
+

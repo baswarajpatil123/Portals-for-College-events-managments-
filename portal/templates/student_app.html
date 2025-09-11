@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student App - Campus Events</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/student.css') }}">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#2563eb">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Campus Events">
+    <meta name="description" content="Browse, register, and check-in to campus events on your mobile device">
+    
+    <!-- App Icons -->
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='icons/icon-152x152.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='icons/icon-32x32.png') }}">
+</head>
+<body>
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <div class="mobile-header-content">
+            <div class="header-left">
+                <h1>🎓 Campus Events</h1>
+                <p class="student-greeting">Welcome, Student!</p>
+            </div>
+            <div class="header-right">
+                <button class="profile-btn" onclick="studentApp.showProfile()">
+                    <div class="profile-avatar">👤</div>
+                </button>
+                <a href="/admin-portal" class="admin-link">Admin</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav">
+        <div class="mobile-nav-container">
+            <a href="#" class="mobile-nav-btn active" data-section="home">
+                <div class="nav-icon">🏠</div>
+                <span>Home</span>
+            </a>
+            <a href="#" class="mobile-nav-btn" data-section="events">
+                <div class="nav-icon">🎯</div>
+                <span>Events</span>
+            </a>
+            <a href="#" class="mobile-nav-btn" data-section="my-events">
+                <div class="nav-icon">📅</div>
+                <span>My Events</span>
+            </a>
+            <a href="#" class="mobile-nav-btn" data-section="profile">
+                <div class="nav-icon">👤</div>
+                <span>Profile</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="mobile-main">
+        <!-- Home Section -->
+        <section id="home" class="mobile-section active">
+            <div class="mobile-container">
+                <!-- Quick Stats -->
+                <div class="stats-cards">
+                    <div class="stat-card-mobile upcoming">
+                        <div class="stat-icon">🎯</div>
+                        <div class="stat-info">
+                            <div class="stat-number" id="upcoming-events">-</div>
+                            <div class="stat-label">Upcoming Events</div>
+                        </div>
+                    </div>
+                    <div class="stat-card-mobile registered">
+                        <div class="stat-icon">📝</div>
+                        <div class="stat-info">
+                            <div class="stat-number" id="my-registrations">-</div>
+                            <div class="stat-label">Registered</div>
+                        </div>
+                    </div>
+                    <div class="stat-card-mobile attended">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-info">
+                            <div class="stat-number" id="events-attended">-</div>
+                            <div class="stat-label">Attended</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Featured Events -->
+                <div class="section-header">
+                    <h2>🌟 Featured Events</h2>
+                    <a href="#" onclick="studentApp.showSection('events')" class="view-all-link">View All</a>
+                </div>
+                <div id="featured-events" class="event-cards-mobile">
+                    <div class="loading-mobile">
+                        <div class="spinner"></div>
+                        Loading events...
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="section-header">
+                    <h2>⚡ Quick Actions</h2>
+                </div>
+                <div class="quick-actions">
+                    <button class="quick-action-btn" onclick="studentApp.showSection('events')">
+                        <div class="action-icon">🔍</div>
+                        <span>Browse Events</span>
+                    </button>
+                    <button class="quick-action-btn" onclick="studentApp.showSection('my-events')">
+                        <div class="action-icon">📅</div>
+                        <span>My Events</span>
+                    </button>
+                    <button class="quick-action-btn" onclick="studentApp.showQRScanner()">
+                        <div class="action-icon">📱</div>
+                        <span>QR Check-in</span>
+                    </button>
+                    <button class="quick-action-btn" onclick="studentApp.showFeedbackForm()">
+                        <div class="action-icon">⭐</div>
+                        <span>Give Feedback</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Events Section -->
+        <section id="events" class="mobile-section">
+            <div class="mobile-container">
+                <div class="section-header-with-search">
+                    <h2>🎯 All Events</h2>
+                    <div class="search-filters">
+                        <input type="text" class="search-input" placeholder="Search events..." id="event-search">
+                        <select class="filter-select" id="event-type-filter-mobile">
+                            <option value="">All Types</option>
+                            <option value="workshop">Workshop</option>
+                            <option value="hackathon">Hackathon</option>
+                            <option value="tech_talk">Tech Talk</option>
+                            <option value="fest">Fest</option>
+                            <option value="seminar">Seminar</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="events-list-mobile" class="event-cards-mobile">
+                    <div class="loading-mobile">
+                        <div class="spinner"></div>
+                        Loading events...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- My Events Section -->
+        <section id="my-events" class="mobile-section">
+            <div class="mobile-container">
+                <div class="section-header">
+                    <h2>📅 My Events</h2>
+                    <div class="event-tabs">
+                        <button class="tab-btn active" data-tab="registered">Registered</button>
+                        <button class="tab-btn" data-tab="attended">Attended</button>
+                        <button class="tab-btn" data-tab="upcoming">Upcoming</button>
+                    </div>
+                </div>
+                <div id="my-events-content" class="event-cards-mobile">
+                    <div class="loading-mobile">
+                        <div class="spinner"></div>
+                        Loading your events...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile" class="mobile-section">
+            <div class="mobile-container">
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar-large">👤</div>
+                        <div class="profile-info">
+                            <h3 id="student-name">Student Name</h3>
+                            <p id="student-email">student@college.edu</p>
+                            <p id="student-college">College Name</p>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-stats">
+                        <div class="profile-stat">
+                            <div class="stat-value" id="profile-registered">0</div>
+                            <div class="stat-desc">Events Registered</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="stat-value" id="profile-attended">0</div>
+                            <div class="stat-desc">Events Attended</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="stat-value" id="profile-feedback">0</div>
+                            <div class="stat-desc">Feedback Given</div>
+                        </div>
+                    </div>
+
+                    <div class="profile-actions">
+                        <button class="profile-action-btn" onclick="studentApp.editProfile()">
+                            <span class="action-icon">✏️</span>
+                            Edit Profile
+                        </button>
+                        <button class="profile-action-btn" onclick="studentApp.viewHistory()">
+                            <span class="action-icon">📊</span>
+                            Activity History
+                        </button>
+                        <button class="profile-action-btn" onclick="studentApp.showSettings()">
+                            <span class="action-icon">⚙️</span>
+                            Settings
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="section-header" style="margin-top: 2rem;">
+                    <h3>📈 Recent Activity</h3>
+                </div>
+                <div id="recent-activity" class="activity-list">
+                    <div class="loading-mobile">
+                        <div class="spinner"></div>
+                        Loading activity...
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Student Login Modal -->
+    <div id="student-login-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>👤 Student Login</h3>
+                <button class="modal-close" onclick="studentApp.closeModal()">&times;</button>
+            </div>
+            <form id="student-login-form">
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" id="student-email-input" required 
+                           placeholder="your.email@college.edu">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Student ID</label>
+                    <input type="text" class="form-input" id="student-id-input" required 
+                           placeholder="CS001">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="button" class="btn btn-outline" onclick="studentApp.closeModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Event Details Modal -->
+    <div id="event-details-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-event-title">Event Details</h3>
+                <button class="modal-close" onclick="studentApp.closeEventModal()">&times;</button>
+            </div>
+            <div id="event-details-content">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Feedback Modal -->
+    <div id="feedback-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>⭐ Submit Feedback</h3>
+                <button class="modal-close" onclick="studentApp.closeFeedbackModal()">&times;</button>
+            </div>
+            <form id="feedback-form">
+                <div class="form-group">
+                    <label class="form-label">Select Event</label>
+                    <select class="form-select" id="feedback-event-select" required>
+                        <option value="">Choose an event you attended</option>
+                    </select>
+                    <small style="color: #6b7280; font-size: 0.875rem; margin-top: 0.25rem; display: block;">
+                        Only events you have attended but haven't given feedback for will appear in this list
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="feedback-rating">Rating (1-5)</label>
+                    <select id="feedback-rating" name="rating" class="form-select" required>
+                        <option value="">Select a rating</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Comments (Optional)</label>
+                    <textarea class="form-textarea" id="feedback-comments" rows="3" 
+                              placeholder="Share your experience..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Submit Feedback</button>
+                    <button type="button" class="btn btn-outline" onclick="studentApp.closeFeedbackModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/student.js') }}"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                        console.log('SW registered with scope: ', registration.scope);
+                    })
+                    .catch(function(error) {
+                        console.log('SW registration failed: ', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
