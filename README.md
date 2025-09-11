@@ -1,7 +1,7 @@
 # Portals-for-College-events-managments-
 
-the setup 
-firstly install mysql 
+#the setup 
+#firstly install mysql 
 then install all things from requirements.txt 
 run the server in one shell
 open the portal using http://localhost:5000/admin-portal  in browser
