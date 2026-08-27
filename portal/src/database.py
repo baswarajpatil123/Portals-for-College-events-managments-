@@ -7,18 +7,18 @@ import uuid
 from datetime import datetime, timedelta
 import os
 
-# MySQL connection configuration
+# MySQL connection configuration (supports environment variables)
 MYSQL_CONFIG = {
-    'host': 'localhost',
-    'port': 3306,
-    'user': 'root',
-    'password': '1111',
-    'database': 'portal',
+    'host': os.getenv('DB_HOST', 'localhost'),
+    'port': int(os.getenv('DB_PORT', 3306)),
+    'user': os.getenv('DB_USER', 'root'),
+    'password': os.getenv('DB_PASSWORD', '1111'),
+    'database': os.getenv('DB_NAME', 'portal'),
     'charset': 'utf8mb4',
     'autocommit': False,
-    'connect_timeout': 10,
-    'read_timeout': 10,
-    'write_timeout': 10
+    'connect_timeout': int(os.getenv('DB_CONNECT_TIMEOUT', 10)),
+    'read_timeout': int(os.getenv('DB_READ_TIMEOUT', 10)),
+    'write_timeout': int(os.getenv('DB_WRITE_TIMEOUT', 10))
 }
 
 def get_db_connection():
