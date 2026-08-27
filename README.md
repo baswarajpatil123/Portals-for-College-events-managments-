@@ -17,25 +17,40 @@
 ## Screenshots
 
 ### Admin Portal & Management
-![Admin Portal](./images/admin-portal.png)
 
-![Admin Dashboard](./images/screenshot-2025-09-11-101140.png)
+<p>
+  <img src="./images/admin-portal.png" width="550" alt="Admin Portal" />
+</p>
 
-![Manage Events](./images/screenshot-2025-09-11-101214.png)
+<p>
+  <img src="./images/screenshot-2025-09-11-101140.png" width="550" alt="Admin Dashboard" />
+</p>
 
-![Create Event](./images/screenshot-2025-09-11-101231.png)
+<p>
+  <img src="./images/screenshot-2025-09-11-101214.png" width="500" alt="Manage Events" />
+</p>
 
-![Student Management](./images/screenshot-2025-09-11-101252.png)
+<p>
+  <img src="./images/screenshot-2025-09-11-101231.png" width="500" alt="Create Event" />
+</p>
 
-![Analytics Dashboard](./images/screenshot-2025-09-11-101316.png)
+<p>
+  <img src="./images/screenshot-2025-09-11-101252.png" width="500" alt="Student Management" />
+</p>
 
-![Reports](./images/screenshot-2025-09-11-101330.png)
+<p>
+  <img src="./images/screenshot-2025-09-11-101316.png" width="450" alt="Analytics Dashboard" />
+</p>
+
+<p>
+  <img src="./images/screenshot-2025-09-11-101330.png" width="450" alt="Reports" />
+</p>
 
 ### Student App
-![Student Portal](./images/student-portal.png)
 
-![Student All Events](./images/screenshot-2025-09-11-101501.png)
-
-![Student My Events](./images/screenshot-2025-09-11-101517.png)
-
-![Student Profile](./images/screenshot-2025-09-11-101536.png)
+<p>
+  <img src="./images/student-portal.png" width="220" alt="Student Portal" />
+  <img src="./images/screenshot-2025-09-11-101501.png" width="220" alt="Student All Events" />
+  <img src="./images/screenshot-2025-09-11-101517.png" width="220" alt="Student My Events" />
+  <img src="./images/screenshot-2025-09-11-101536.png" width="220" alt="Student Profile" />
+</p>
